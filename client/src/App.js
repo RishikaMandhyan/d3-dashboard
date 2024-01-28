@@ -1,28 +1,29 @@
-import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import {Provider } from 'react-redux'
-import store from './store/store';
-import { Testing } from './components/Testing';
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { Testing } from "./components/Testing";
+import { Login } from "./components/Login";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import DashBoard from "./pages/DashBoard";
 
 function App() {
-
   return (
-    <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
-              <Route path="login" element={Login}/>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/">
+            <Route path="login" element={<Login />} />
+            {/* <Route path="signup" element={<Signup />} /> */}
+
+            <Route element={<ProtectedRoutes />}>
+              <Route path="dashboard" element={<DashBoard />}></Route>
             </Route>
-            
-          </Routes>
-        </BrowserRouter>
-
-        <Testing/>
-
-      </Provider>
-    </div>
+          </Route>
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 

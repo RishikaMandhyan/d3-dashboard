@@ -5,6 +5,7 @@ const userSlice= createSlice({
     initialState: {
         isAuthenticated: false,
         username: null,
+        accessToken: null,
     },
     reducers: {
 
@@ -12,9 +13,9 @@ const userSlice= createSlice({
         //the state of this particular slice
         
         addUser(state, action){
-           
             state.isAuthenticated=true;
-            state.username= action.payload; 
+            state.username= action.payload.username; 
+            state.accessToken= action.payload.accessToken; 
         },
         removeUser(state, action){
             state={};
