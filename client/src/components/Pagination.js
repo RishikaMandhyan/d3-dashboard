@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import useTransactions from "../hooks/useTransactions";
 
 const Master = styled.div`
   box-sizing: border-box;
@@ -68,6 +69,16 @@ const Page = styled.div`
 `;
 
 export default function PaginationContainer() {
+  console.log("pagination");
+  const { page, setPage } = useTransactions("from page");
+  const temp = new Array(5).fill(1);
+
+  const handleNext = () => {
+    setPage((prev) => (prev + 1) % 5);
+  };
+
+  console.log("pagination2");
+
   return (
     <Master>
       <Previous>
@@ -88,15 +99,15 @@ export default function PaginationContainer() {
         <span>Previous</span>
       </Previous>
       <Pages>
-        <Page>1</Page>
-        <Page>...</Page>
-        <Page className="selected">8</Page>
-        <Page>9</Page>
-        <Page>10</Page>
-        <Page>11</Page>
-        <Page>12</Page>
+        {temp.map((item, index) => {
+          return (
+            <Page key={index} className={`${index === page ? "selected" : ""}`}>
+              {index + 1}
+            </Page>
+          );
+        })}
       </Pages>
-      <Next>
+      <Next onClick={handleNext}>
         <span>Next</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 
-import { list } from "../data/transactions";
 import Pagination from "./Pagination";
+import useTransactions from "../hooks/useTransactions";
+import useRefreshToken from "../hooks/useRefreshToken";
 
 const Master = styled.div`
   box-sizing: border-box;
@@ -32,6 +33,7 @@ const Search = styled.div`
   .searchInput {
     border: none;
     width: 100%;
+    outline: none;
     &::placeholder {
       color: var(--Black-60, #999);
       font-size: 14px;
@@ -130,6 +132,10 @@ const Border = styled.div`
 `;
 
 export default function TransactionContainer() {
+  console.log("transaction");
+  const { data, setData, error } = useTransactions("from transaction");
+  const refresh = useRefreshToken();
+
   return (
     <Master>
       <SearchSortBar>
@@ -265,9 +271,9 @@ export default function TransactionContainer() {
         </Title2>
       </Header>
 
-      {list[0].map((item) => {
+      {data?.list?.map((item, index) => {
         return (
-          <div>
+          <div key={`s${index}`}>
             <Transaction>
               <Title1 className="id">#{item.id}</Title1>
               <Title1 className="data">{item.date}</Title1>
@@ -279,6 +285,7 @@ export default function TransactionContainer() {
         );
       })}
 
+      <button onClick={refresh}>Refresh access Token</button>
       <Pagination />
     </Master>
   );

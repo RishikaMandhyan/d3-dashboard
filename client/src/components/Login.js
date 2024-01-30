@@ -45,7 +45,7 @@ export const Login = () => {
           headers: {
             "Content-Type": "application/json", //this tells the sserver tht the body of our request is in JSON
           },
-          // withCredentials: true, //this ensures tht cookies are also sent in this cross-origin request
+          withCredentials: true, //this ensures tht cookies are also sent in this cross-origin request
           //which is by default false
         }
       );

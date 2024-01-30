@@ -21,7 +21,11 @@ let rTokens = []; //temporary db
 let users = [
   {
     username: "rishika",
-    password: "$2b$04$x4s2IkaQ3B8leRiJVHGPZ.05mOpzLcAV.pKz3h7Pq2fAcm7uVhnci",
+    password: "$2b$04$x4s2IkaQ3B8leRiJVHGPZ.05mOpzLcAV.pKz3h7Pq2fAcm7uVhnci", //'123'
+  },
+  {
+    username: "rishika23",
+    password: "$2b$04$JEsaMYnVGOQs2obXq0BsL.Gs.mVIkTjx3tzbjGtOWufLueergtrF2", //"12345"
   },
 ]; //temporary db
 
@@ -31,12 +35,27 @@ app.post("/signup", async (req, res) => {
     //we will ask user to login instead
     //if email is unique, we can proceed further
 
+    const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
 
     const hashedPassword = await bcrypt.hash(password, 1);
-    users.push({ username: req.body.username, password: hashedPassword });
-    res.status(201).json(users); //here also we have to send the access and refresh tokens
+    console.log(hashedPassword);
+    const user = { username: username, password: hashedPassword };
+    users.push({ ...user });
+
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_KEY, {
+      expiresIn: "20s",
+    });
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_KEY, {
+      expiresIn: "30d",
+    });
+
+    rTokens.push(refreshToken);
+
+    // res.cookie("accessToken", accessToken, { httpOnly: true });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true });
+    res.status(201).json({ accessToken: accessToken });
   } catch {
     return res.status(500);
   }
@@ -54,7 +73,7 @@ app.post("/login", async (req, res) => {
       const user = { username: username, password: password };
 
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_KEY, {
-        expiresIn: "60s",
+        expiresIn: "20s",
       });
       const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_KEY, {
         expiresIn: "30d",
@@ -74,9 +93,9 @@ app.post("/login", async (req, res) => {
 });
 
 //this route is called when we are sending a refresh token and need another access token
-app.post("/token", (req, res) => {
+app.get("/token", (req, res) => {
   const refreshToken = req.cookies.refreshToken;
-  console.log(refreshToken);
+  console.log("rtoken", refreshToken);
   if (!refreshToken) return res.status(401);
 
   if (!rTokens.includes(refreshToken)) res.status(403); //from db
@@ -90,10 +109,10 @@ app.post("/token", (req, res) => {
     const accessToken = jwt.sign(
       { username: user.username, password: user.password },
       process.env.ACCESS_TOKEN_KEY,
-      { expiresIn: "15d" }
+      { expiresIn: "20s" }
     );
-    res.cookie("accessToken", accessToken, { httpOnly: true });
-    res.status(200).json("new access token generated from refresh token");
+    // res.cookie("refreshToken", refreshToken, { httpOnly: true });
+    res.status(200).json({ accessToken: accessToken });
   });
 });
 
