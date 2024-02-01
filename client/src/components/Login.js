@@ -56,7 +56,6 @@ export const Login = () => {
           accessToken: res?.data?.accessToken,
         })
       );
-
       navigate("/dashboard");
     } catch (err) {
       if (!err?.response) {

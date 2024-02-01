@@ -4,11 +4,10 @@ import { Header } from "./Header";
 import { Body } from "./Body";
 
 const Master = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   background: #fafafa;
-  position: absolute;
-  left: 224px;
 `;
 
 export default function Content() {

@@ -8,17 +8,14 @@ const useTransactions = (x) => {
   const [page, setPage] = useState(0);
 
   const axiosPrivateInstance = useAxiosPrivateInstance();
-  console.log("transactionshooks called");
 
   useEffect(() => {
-    console.log(page);
     const getData = async () => {
       try {
         const res = await axiosPrivateInstance.get("/transactions", {
           page: page + 1,
         });
 
-        console.log("useeffect called", x);
         setData(res.data);
       } catch (err) {
         console.error(err);

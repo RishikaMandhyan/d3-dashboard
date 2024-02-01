@@ -1,24 +1,25 @@
 import { styled } from "styled-components";
+import { useState } from "react";
 
 const MasterContainer = styled.div`
   box-sizing: border-box;
-  width: 224px;
   background: #1e2640;
   display: flex;
-  padding: 16px 10px;
+  padding: 8px 10px;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
-  flex: 1 0 0;
   height: 100vh;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
+  width: fit-content;
+  max-width: 200px;
+  overflow: hidden;
+  transition: width 5s ease-in-out;
 `;
 const NavTop = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 24px;
   flex: 1 0 0;
   position: relative;
@@ -27,8 +28,10 @@ const IconBox = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 192px;
   position: relative;
+  color: white;
+  padding: 8px 16px;
+  border-bottom: 1px solid #d9d9d9;
 `;
 const Title = styled.div`
   display: flex;
@@ -46,20 +49,12 @@ const Title = styled.div`
     line-height: 22px;
     cursor: pointer;
   }
-  .visitStore {
-    color: var(--Black-100, #fff);
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 16px;
-    text-decoration-line: underline;
-    opacity: 0.8;
-    cursor: pointer;
-  }
 `;
 
-const Icon = styled.span`
-  position: absolute;
-  right: 0;
+const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 `;
 
 const NavList = styled.div`
@@ -68,17 +63,27 @@ const NavList = styled.div`
   gap: 4px;
 `;
 const ListItem = styled.div`
+  align-self: flex-start;
   color: white;
   background: #1e2640;
   display: flex;
-  width: 176px;
+  align-items: center;
   padding: 8px 16px;
-  align-items: flex-start;
   gap: 12px;
+  width: 100%;
   border-radius: 4px;
   cursor: pointer;
   // border-radius: 4px;
   // background: rgba(255, 255, 255, 0.10);
+
+  ${(props) => {
+    return props.active
+      ? `
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    `
+      : ``;
+  }}
 
   .navbarItem {
     color: var(--Black-100, #fff);
@@ -86,6 +91,11 @@ const ListItem = styled.div`
     font-weight: 500;
     line-height: 20px;
     opacity: 0.8;
+  }
+
+  .active {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
   }
 
   &:hover {
@@ -97,10 +107,10 @@ const ListItem = styled.div`
 const NavBottom = styled.div`
   box-sizing: border-box;
   display: flex;
-  width: 192px;
   padding: 6px 12px;
   border-radius: 4px;
   background: #353c53;
+  gap: 12px;
 `;
 const Image = styled.div`
   width: 39px;
@@ -117,7 +127,6 @@ const BottomIcon = styled.div`
   padding: 6px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
-  margin-right: 12px;
 `;
 const BottomContent = styled.div`
 display: flex;
@@ -144,54 +153,39 @@ line-height: 24px;
 `;
 
 export default function NavbarContainer({ navbarItems }) {
+  const [display, setDisplay] = useState(false);
+  const [activeTab, setActiveTab] = useState("dashboard");
+
   return (
     <MasterContainer>
       <NavTop>
         <IconBox>
-          <Image />
-          <Title>
-            <span className="storeTitle">Nishyan</span>
-            <span className="visitStore">Visit store</span>
-          </Title>
-
-          <Icon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M2.84685 7.22185C3.26727 6.80143 3.92516 6.76321 4.38876 7.10719L4.52157 7.22185L10 12.6997L15.4784 7.22185C15.8988 6.80143 16.5567 6.76321 17.0203 7.10719L17.1532 7.22185C17.5736 7.64227 17.6118 8.30016 17.2678 8.76376L17.1532 8.89657L10.8374 15.2124C10.4169 15.6328 9.75905 15.671 9.29545 15.327L9.16264 15.2124L2.84685 8.89657C2.38438 8.43411 2.38438 7.68431 2.84685 7.22185Z"
-                fill="white"
-              />
-            </svg>
+          <Icon onClick={() => setDisplay((prev) => !prev)}>
+            <span class="material-symbols-outlined">menu</span>
           </Icon>
+          <Title>
+            <span
+              className="storeTitle"
+              style={{ display: `${display ? "block" : "none"}` }}
+            >
+              Best Bakery
+            </span>
+          </Title>
         </IconBox>
 
         <NavList>
           {navbarItems.map((item) => {
             return (
-              <ListItem>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              <ListItem
+                active={item.name?.toLowerCase() === activeTab ? true : false}
+              >
+                <span class="material-symbols-outlined">{item.img}</span>
+                <span
+                  style={{ display: `${display ? "block" : "none"}` }}
+                  lassName="navbarItem"
                 >
-                  <g id="Navbar Icon">
-                    <path
-                      id="Vector"
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M3.75 13.75H1.47727C0.661397 13.75 0 13.1904 0 12.5V3.75C0 3.05964 0.661397 2.5 1.47727 2.5H14.7727C15.5886 2.5 16.25 3.05964 16.25 3.75L16.25 6.25H18.5227C19.3386 6.25 20 6.8796 20 7.65625V16.0938C20 16.8704 19.3386 17.5 18.5227 17.5H5.22727C4.4114 17.5 3.75 16.8704 3.75 16.0938V13.75ZM5 6C4.17157 6 3.5 6.67157 3.5 7.5V12.25H1.5V4H14.75L14.75 6H5ZM11.875 14.375C13.2557 14.375 14.375 13.2557 14.375 11.875C14.375 10.4943 13.2557 9.375 11.875 9.375C10.4943 9.375 9.375 10.4943 9.375 11.875C9.375 13.2557 10.4943 14.375 11.875 14.375Z"
-                      fill="white"
-                    />
-                  </g>
-                </svg>
-                <span className="navbarItem">{item.name}</span>
+                  {item.name}
+                </span>
               </ListItem>
             );
           })}
@@ -214,8 +208,8 @@ export default function NavbarContainer({ navbarItems }) {
             />
           </svg>
         </BottomIcon>
-        <BottomContent>
-          <span className="credits">Available credits</span>
+        <BottomContent style={{ display: `${display ? "block" : "none"}` }}>
+          <span className="credits">Current Credits</span>
           <span className="creditamount">222.10</span>
         </BottomContent>
       </NavBottom>

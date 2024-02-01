@@ -13,8 +13,6 @@ const useRefreshToken = () => {
         withCredentials: true,
       });
 
-      console.log(user.accessToken, "old");
-      console.log(res?.data?.accessToken, "new");
       dispatch(
         addUser({
           username: user?.username,

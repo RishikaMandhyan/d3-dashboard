@@ -26,7 +26,6 @@ const useAxiosPrivateInstance = () => {
         return res;
       },
       async (err) => {
-        console.log(err);
         const prevRequest = err?.config;
         if (err?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true; //to make sure that we try to refresh one failed accessToken only once

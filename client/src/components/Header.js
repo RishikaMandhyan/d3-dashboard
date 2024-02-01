@@ -2,8 +2,7 @@ import { styled } from "styled-components";
 
 const Master = styled.div`
   display: flex;
-  width: 1152px;
-  padding: 12px 32px;
+  padding: 8px 32px;
   align-items: center;
   gap: 16px;
   border-bottom: 1px solid #d9d9d9;
@@ -38,7 +37,7 @@ const PaymentSub = styled.span`
 const Search = styled.div`
   display: flex;
   width: 368px;
-  padding: 9px 16px;
+  padding: 7px 16px;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
@@ -62,13 +61,18 @@ const Logout = styled.button`
   background-color: #1e2640;
   color: white;
   border-radius: 4px;
-  height: 30px;
+  height: 36px;
   padding: 0px 12px;
   border: none;
   cursor: pointer;
 `;
 
 export function Header() {
+  async function handleLogout() {
+    try {
+    } catch (err) {}
+  }
+
   return (
     <Master>
       <Payments>
@@ -135,7 +139,7 @@ export function Header() {
           placeholder="Search features, tutorials, etc."
         />
       </Search>
-      <Logout>Logout</Logout>
+      <Logout onClick={handleLogout}>Logout</Logout>
     </Master>
   );
 }

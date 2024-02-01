@@ -1,51 +1,27 @@
 const list = [
   {
-    img: "",
-    name: "Home",
+    img: "dashboard",
+    name: "Dashboard",
   },
   {
-    img: "",
+    img: "receipt",
     name: "Orders",
   },
   {
-    img: "",
-    name: "Products",
+    img: "storefront",
+    name: "Inventory",
   },
   {
-    img: "",
+    img: "local_shipping",
     name: "Delivery",
   },
   {
-    img: "",
-    name: "Marketing",
-  },
-  {
-    img: "",
+    img: "insert_chart",
     name: "Analytics",
   },
   {
-    img: "",
+    img: "paid",
     name: "Payments",
-  },
-  {
-    img: "",
-    name: "Tools",
-  },
-  {
-    img: "",
-    name: "Discounts",
-  },
-  {
-    img: "",
-    name: "Audience",
-  },
-  {
-    img: "",
-    name: "Appearance",
-  },
-  {
-    img: "",
-    name: "Plugins",
   },
 ];
 

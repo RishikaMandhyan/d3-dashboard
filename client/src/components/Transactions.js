@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 
 import Pagination from "./Pagination";
 import useTransactions from "../hooks/useTransactions";
-import useRefreshToken from "../hooks/useRefreshToken";
 
 const Master = styled.div`
   box-sizing: border-box;
@@ -132,9 +131,7 @@ const Border = styled.div`
 `;
 
 export default function TransactionContainer() {
-  console.log("transaction");
   const { data, setData, error } = useTransactions("from transaction");
-  const refresh = useRefreshToken();
 
   return (
     <Master>
@@ -284,8 +281,6 @@ export default function TransactionContainer() {
           </div>
         );
       })}
-
-      <button onClick={refresh}>Refresh access Token</button>
       <Pagination />
     </Master>
   );
