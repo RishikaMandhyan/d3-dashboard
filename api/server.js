@@ -6,6 +6,15 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
 const app = express();
+
+const {
+  transactionsData,
+  salesGraph,
+  ordersGraph,
+  platformGraph,
+  categoryGraph,
+} = require("./data.js");
+
 app.use(
   cors({
     origin: true,
@@ -17,287 +26,6 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({ origin: "http://localhost:3001" }));
-
-const data = [
-  {
-    username: "rishika",
-    total: 27,
-    list: [
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281209",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-    ],
-  },
-
-  {
-    username: "rishika23",
-    total: 17,
-    list: [
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281210",
-        date: "7 July, 2023",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-      {
-        id: "281211",
-        date: "7 July, 2022",
-        amount: "1,278.23",
-        fee: "22",
-      },
-    ],
-  },
-];
 
 const authenticateUser = (req, res, next) => {
   console.log(req.cookies.accessToken);
@@ -313,13 +41,25 @@ const authenticateUser = (req, res, next) => {
     req.user = user;
     next();
   });
-
   //in the jwt.verify, we have sent a callback fucntion with err and user, here user is the payload data
   //obtained from the token given inside jwt.verify
 };
 
 app.get("/transactions", authenticateUser, (req, res) => {
-  res.json(data.find((item) => item.username == req.user.username));
+  res.json(transactionsData.find((item) => item.username == req.user.username));
+});
+app.get("/sales-analytics", authenticateUser, (req, res) => {
+  console.log(req.params.label);
+  res.status(200).json(salesGraph);
+});
+app.get("/orders-analytics", authenticateUser, (req, res) => {
+  res.status(200).json(ordersGraph);
+});
+app.get("/platform-analytics", authenticateUser, (req, res) => {
+  res.status(200).json(platformGraph);
+});
+app.get("/category-analytics", authenticateUser, (req, res) => {
+  res.status(200).json(categoryGraph);
 });
 
 app.listen(process.env.PORT || 3000, () => {

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const MasterContainer = styled.div`
   box-sizing: border-box;
@@ -73,8 +74,6 @@ const ListItem = styled.div`
   width: 100%;
   border-radius: 4px;
   cursor: pointer;
-  // border-radius: 4px;
-  // background: rgba(255, 255, 255, 0.10);
 
   ${(props) => {
     return props.active
@@ -112,13 +111,6 @@ const NavBottom = styled.div`
   background: #353c53;
   gap: 12px;
 `;
-const Image = styled.div`
-  width: 39px;
-  height: 39px;
-  border-radius: 4px;
-  background: url("./2aid9h8lGHcOOVIZGPdcpd055oI.svg"),
-    lightgray 50% / contain no-repeat;
-`;
 
 const BottomIcon = styled.div`
   display: flex;
@@ -153,7 +145,7 @@ line-height: 24px;
 `;
 
 export default function NavbarContainer({ navbarItems }) {
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
@@ -176,17 +168,27 @@ export default function NavbarContainer({ navbarItems }) {
         <NavList>
           {navbarItems.map((item) => {
             return (
-              <ListItem
-                active={item.name?.toLowerCase() === activeTab ? true : false}
+              <Link
+                style={{ textDecoration: "none" }}
+                to={`/${item?.name?.toLowerCase()}`}
               >
-                <span class="material-symbols-outlined">{item.img}</span>
-                <span
-                  style={{ display: `${display ? "block" : "none"}` }}
-                  lassName="navbarItem"
+                <ListItem
+                  active={
+                    item?.name?.toLowerCase() === activeTab ? true : false
+                  }
+                  onClick={() => {
+                    setActiveTab(item?.name?.toLowerCase());
+                  }}
                 >
-                  {item.name}
-                </span>
-              </ListItem>
+                  <span class="material-symbols-outlined">{item.img}</span>
+                  <span
+                    style={{ display: `${display ? "block" : "none"}` }}
+                    lassName="navbarItem"
+                  >
+                    {item.name}
+                  </span>
+                </ListItem>
+              </Link>
             );
           })}
         </NavList>

@@ -132,6 +132,7 @@ const Border = styled.div`
 
 export default function TransactionContainer() {
   const { data, setData, error } = useTransactions("from transaction");
+  console.log(data, "data");
 
   return (
     <Master>

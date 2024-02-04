@@ -11,10 +11,10 @@ const list = [
     img: "storefront",
     name: "Inventory",
   },
-  {
-    img: "local_shipping",
-    name: "Delivery",
-  },
+  // {
+  //   img: "local_shipping",
+  //   name: "Delivery",
+  // },
   {
     img: "insert_chart",
     name: "Analytics",

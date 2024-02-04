@@ -1,21 +1,13 @@
 import React from "react";
-import NavbarContainer from "../components/NavBar";
-import Content from "../components/Content";
-import { styled } from "styled-components";
-import { list } from "../data/navbarItems";
+import Layout from "./Layout";
+import { DashboardBody } from "../components/DashboardBody";
 
-const Dashboard = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
-const DashBoard = () => {
+const Dashboard = () => {
   return (
-    <Dashboard>
-      <NavbarContainer navbarItems={list} />
-      <Content />
-    </Dashboard>
+    <Layout>
+      <DashboardBody />
+    </Layout>
   );
 };
 
-export default DashBoard;
+export default Dashboard;

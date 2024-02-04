@@ -10,7 +10,7 @@ const Master = styled.div`
   padding: 32px;
 `;
 
-export function Body() {
+export function DashboardBody() {
   return (
     <Master>
       <Overview />

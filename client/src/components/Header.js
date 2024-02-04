@@ -7,6 +7,8 @@ const Master = styled.div`
   gap: 16px;
   border-bottom: 1px solid #d9d9d9;
   background: #fff;
+  position: sticky;
+  top: 0;
 `;
 const Payments = styled.div`
   display: flex;
