@@ -67,6 +67,9 @@ const Logout = styled.button`
   padding: 0px 12px;
   border: none;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
 `;
 
 export function Header() {

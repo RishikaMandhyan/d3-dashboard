@@ -13,6 +13,7 @@ const {
   ordersGraph,
   platformGraph,
   categoryGraph,
+  inventory,
 } = require("./data.js");
 
 app.use(
@@ -60,6 +61,12 @@ app.get("/platform-analytics", authenticateUser, (req, res) => {
 });
 app.get("/category-analytics", authenticateUser, (req, res) => {
   res.status(200).json(categoryGraph);
+});
+app.get("/inventory", authenticateUser, (req, res) => {
+  const temp = inventory.filter((item) =>
+    item?.name?.toLowerCase().includes(req?.query?.q?.toLowerCase())
+  );
+  res.status(200).json(temp);
 });
 
 app.listen(process.env.PORT || 3000, () => {

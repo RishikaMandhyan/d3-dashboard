@@ -61,7 +61,7 @@ const Icon = styled.div`
 const NavList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 `;
 const ListItem = styled.div`
   align-self: flex-start;
@@ -69,7 +69,7 @@ const ListItem = styled.div`
   background: #1e2640;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 6px 16px;
   gap: 12px;
   width: 100%;
   border-radius: 4px;
@@ -171,14 +171,17 @@ export default function NavbarContainer({ navbarItems }) {
               <Link
                 style={{ textDecoration: "none" }}
                 to={`/${item?.name?.toLowerCase()}`}
+                onClick={() => {
+                  setActiveTab(item?.name?.toLowerCase());
+                }}
               >
                 <ListItem
+                  // onClick={() => {
+                  //   setActiveTab(item?.name?.toLowerCase());
+                  // }}
                   active={
                     item?.name?.toLowerCase() === activeTab ? true : false
                   }
-                  onClick={() => {
-                    setActiveTab(item?.name?.toLowerCase());
-                  }}
                 >
                   <span class="material-symbols-outlined">{item.img}</span>
                   <span

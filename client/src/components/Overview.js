@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import CreateOrder from "./CreateOrder";
+import { useState } from "react";
 
 const Master = styled.div``;
 const Container1 = styled.div`
@@ -63,7 +65,29 @@ const Amount = styled.div`
   font-weight: 500;
   line-height: 38px;
 `;
+
+const OrderButton = styled.button`
+  background-color: #1e2640;
+  color: white;
+  border-radius: 4px;
+  height: 36px;
+  padding: 0px 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+`;
+
 export default function OverviewContainer() {
+  const [display, setDisplay] = useState(false);
   return (
     <Master>
       <Container1>
@@ -96,7 +120,12 @@ export default function OverviewContainer() {
       </AggregateContainer>
       <Container1>
         <LeftBold>Transactions | This month</LeftBold>
+        <OrderButton onClick={() => setDisplay((prev) => !prev)}>
+          <span class="material-symbols-outlined">add</span>
+          <span>Add order</span>
+        </OrderButton>
       </Container1>
+      <CreateOrder display={display} setDisplay={setDisplay}></CreateOrder>
     </Master>
   );
 }
