@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import useInventory from "../hooks/useInventory";
+import useAxiosPrivateInstance from "../hooks/useAxiosPrivateInstance";
+import { useDispatch } from "react-redux";
+import { addToast, removeToast } from "../store/toastSlice";
 
 const Master = styled.div`
   width: 500px;
-  min-height: 500px;
+  min-height: 600px;
   position: fixed;
   bottom: 0;
   background-color: white;
@@ -31,8 +34,15 @@ const Title = styled.div`
   }
 `;
 
+const Error = styled.div`
+  color: red;
+  padding: 13px 5px 5px;
+  text-align: center;
+  font-size: 16px;
+`;
+
 const Form = styled.div`
-  padding: 8px 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -62,9 +72,35 @@ const ItemsList = styled.div`
 
 const ItemsSearchList = styled.div`
   height: fit-content;
-  max-height: 100px;
+  max-height: 150px;
   overflow-y: scroll;
   cursor: pointer;
+  border-radius: 8px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 1)
+    );
+    z-index: 1;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+  }
 `;
 
 const Item = styled.div`
@@ -124,23 +160,31 @@ const CreateOrder = ({ display, setDisplay }) => {
   const [buyer, setBuyer] = useState("");
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
+  const [error, setError] = useState("");
   const [orderTotal, setOrderTotal] = useState(0);
   const { data, setData } = useInventory(search);
+
+  const dispatch = useDispatch();
+  const axiosPrivateInstance = useAxiosPrivateInstance();
 
   function handleChange(e) {
     setSearch(e.target.value);
   }
 
   function handleAddItem(item) {
-    console.log(item, items);
-    setItems((prev) => {
-      return [
-        ...prev,
-        { ...item, quantity: 1, maxQuantity: item?.maxQuantity - 1 },
-      ];
-    });
+    const index = items?.findIndex((orderItem) => orderItem.id === item.id);
+    if (index !== -1) {
+      handleIncrease(item.id);
+    } else {
+      setItems((prev) => {
+        return [
+          ...prev,
+          { ...item, quantity: 1, maxQuantity: item?.maxQuantity - 1 },
+        ];
+      });
 
-    setOrderTotal((prev) => prev + item.price);
+      setOrderTotal((prev) => prev + item.price);
+    }
   }
 
   function handleDecrease(id) {
@@ -181,6 +225,47 @@ const CreateOrder = ({ display, setDisplay }) => {
     setItems(newItems);
   }
 
+  async function handleSubmit() {
+    if (buyer === "" || items?.length === 0) {
+      setError("All fields are required");
+      return;
+    } else setError("");
+
+    try {
+      const res = await axiosPrivateInstance.post("/orders", {
+        buyer: buyer,
+        items: items,
+      });
+
+      setBuyer("");
+
+      let newToast = {
+        id: Date.now(),
+        message: "Order created successfully!",
+        type: "success",
+      };
+      dispatch(addToast(newToast));
+      setTimeout(() => {
+        dispatch(removeToast({ id: newToast.id }));
+      }, 4000);
+
+      setItems([]);
+      setOrderTotal(0);
+      setDisplay(false);
+    } catch (err) {
+      console.error(err);
+      let newToast = {
+        id: Date.now(),
+        message: "Could not create the order!",
+        type: "failure",
+      };
+      dispatch(addToast(newToast));
+      setTimeout(() => {
+        dispatch(removeToast({ id: newToast.id }));
+      }, 4000);
+    }
+  }
+
   return display ? (
     <Master>
       <Title>
@@ -192,6 +277,7 @@ const CreateOrder = ({ display, setDisplay }) => {
           close
         </span>
       </Title>
+      {error ? <Error>{error}</Error> : null}
       <Form>
         <input
           placeholder="Add Buyer"
@@ -241,7 +327,7 @@ const CreateOrder = ({ display, setDisplay }) => {
       </Form>
       <Footer>
         <OrderTotal>Order total: &#8377;{orderTotal}</OrderTotal>
-        <Submit>Submit</Submit>
+        <Submit onClick={handleSubmit}>Submit</Submit>
       </Footer>
     </Master>
   ) : null;

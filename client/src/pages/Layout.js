@@ -3,6 +3,8 @@ import NavbarContainer from "../components/NavBar";
 import { Header } from "../components/Header";
 import { styled } from "styled-components";
 import { list } from "../data/navbarItems";
+import { useSelector } from "react-redux";
+import Toasts from "../components/Toasts";
 
 const Master = styled.div`
   display: flex;
@@ -17,6 +19,8 @@ const RightContent = styled.div`
 `;
 
 const Layout = (props) => {
+  const toastState = useSelector((state) => state.toasts);
+
   return (
     <Master>
       <NavbarContainer navbarItems={list} />
@@ -24,6 +28,9 @@ const Layout = (props) => {
         <Header />
         {props.children}
       </RightContent>
+      {toastState?.toasts?.length ? (
+        <Toasts toasts={toastState?.toasts} />
+      ) : null}
     </Master>
   );
 };

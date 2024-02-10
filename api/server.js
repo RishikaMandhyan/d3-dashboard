@@ -69,6 +69,10 @@ app.get("/inventory", authenticateUser, (req, res) => {
   res.status(200).json(temp);
 });
 
+app.post("/orders", authenticateUser, (req, res) => {
+  res.status(200).json(req.body);
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("Main Server running on 3000");
 });

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MasterContainer = styled.div`
   box-sizing: border-box;
@@ -145,8 +145,10 @@ line-height: 24px;
 `;
 
 export default function NavbarContainer({ navbarItems }) {
+  const location = useLocation();
+
   const [display, setDisplay] = useState(true);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState(location.pathname.split("/")[1]);
 
   return (
     <MasterContainer>
@@ -176,9 +178,6 @@ export default function NavbarContainer({ navbarItems }) {
                 }}
               >
                 <ListItem
-                  // onClick={() => {
-                  //   setActiveTab(item?.name?.toLowerCase());
-                  // }}
                   active={
                     item?.name?.toLowerCase() === activeTab ? true : false
                   }
