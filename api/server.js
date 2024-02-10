@@ -49,19 +49,24 @@ const authenticateUser = (req, res, next) => {
 app.get("/transactions", authenticateUser, (req, res) => {
   res.json(transactionsData.find((item) => item.username == req.user.username));
 });
+
 app.get("/sales-analytics", authenticateUser, (req, res) => {
   console.log(req.params.label);
   res.status(200).json(salesGraph);
 });
+
 app.get("/orders-analytics", authenticateUser, (req, res) => {
   res.status(200).json(ordersGraph);
 });
+
 app.get("/platform-analytics", authenticateUser, (req, res) => {
   res.status(200).json(platformGraph);
 });
+
 app.get("/category-analytics", authenticateUser, (req, res) => {
   res.status(200).json(categoryGraph);
 });
+
 app.get("/inventory", authenticateUser, (req, res) => {
   const temp = inventory.filter((item) =>
     item?.name?.toLowerCase().includes(req?.query?.q?.toLowerCase())
@@ -71,6 +76,16 @@ app.get("/inventory", authenticateUser, (req, res) => {
 
 app.post("/orders", authenticateUser, (req, res) => {
   res.status(200).json(req.body);
+});
+
+app.post("/inventory/:id", authenticateUser, (req, res) => {
+  console.log(req.params.id);
+  res.status(200).json(req.body);
+});
+
+app.get("/inventory/:id", authenticateUser, (req, res) => {
+  const ans = inventory.find((item) => item.id == req.params.id);
+  res.status(200).json(ans);
 });
 
 app.listen(process.env.PORT || 3000, () => {

@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import Inventory from "./pages/Inventory";
 import Payments from "./pages/Payments";
+import InventoryItem from "./pages/InventoryItem";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="analytics" element={<Analytics />}></Route>
               <Route path="orders" element={<Orders />}></Route>
               <Route path="inventory" element={<Inventory />}></Route>
+              <Route path="inventory/:id" element={<InventoryItem />}></Route>
               <Route path="payments" element={<Payments />}></Route>
             </Route>
           </Route>

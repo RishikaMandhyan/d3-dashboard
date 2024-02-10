@@ -1,10 +1,11 @@
 import React from "react";
 import Layout from "./Layout";
+import InventoryList from "../components/InventoryList";
 
 const Inventory = () => {
   return (
     <Layout>
-      <h1>Work in Progress</h1>
+      <InventoryList />
     </Layout>
   );
 };

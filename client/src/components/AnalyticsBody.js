@@ -16,7 +16,7 @@ import {
 import { Line, Pie, Bar } from "react-chartjs-2";
 
 import useGraphs from "../hooks/useGraphs";
-import { months } from "../data/months";
+import { months } from "../constants/months";
 
 ChartJS.register(
   CategoryScale,

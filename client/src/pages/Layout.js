@@ -2,7 +2,7 @@ import React from "react";
 import NavbarContainer from "../components/NavBar";
 import { Header } from "../components/Header";
 import { styled } from "styled-components";
-import { list } from "../data/navbarItems";
+import { list } from "../constants/navbarItems";
 import { useSelector } from "react-redux";
 import Toasts from "../components/Toasts";
 
