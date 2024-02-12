@@ -20,7 +20,7 @@ const Title = styled.div`
   border-top-right-radius: 16px;
   border-top-left-radius: 16px;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 16px 8px 16px;
   color: var(--Black-12, #1a181e);
   font-size: 18px;
   font-weight: 500;
