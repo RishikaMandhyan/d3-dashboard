@@ -65,16 +65,16 @@ const Sort = styled.div`
     line-height: 24px;
   }
 `;
-const Download = styled.div`
-  box-sizing: border-box;
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
-  border: 1px solid #d9d9d9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// const Download = styled.div`
+//   box-sizing: border-box;
+//   width: 36px;
+//   height: 36px;
+//   border-radius: 4px;
+//   border: 1px solid #d9d9d9;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Header = styled.div`
   margin-top: 12px;
@@ -132,7 +132,6 @@ const Border = styled.div`
 
 export default function TransactionContainer() {
   const { data, setData, error } = useTransactions("from transaction");
-  console.log(data, "data");
 
   return (
     <Master>
@@ -196,20 +195,6 @@ export default function TransactionContainer() {
               />
             </svg>
           </Sort>
-          <Download>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M17.9993 11.9414C18.371 11.9414 18.6811 12.2102 18.7435 12.5968L18.75 12.7L18.7495 16.2321C18.7495 17.5585 17.7164 18.655 16.3813 18.7448L16.2153 18.75L3.77794 18.7499C2.44615 18.7499 1.34529 17.7208 1.25525 16.391L1.25 16.2258V12.6863C1.25 12.2749 1.58596 11.9414 2.00027 11.9414C2.37194 11.9414 2.68197 12.2102 2.74442 12.5968L2.75092 12.7L2.75044 16.2321C2.75044 16.7555 3.14596 17.2013 3.65248 17.2534L3.76695 17.2599L16.2217 17.2602C16.7449 17.2602 17.1902 16.8642 17.2423 16.3577L17.2489 16.2429L17.2492 12.6863C17.2492 12.2749 17.585 11.9414 17.9993 11.9414ZM10.0121 1.25C10.3715 1.25038 10.6815 1.51921 10.744 1.90576L10.7505 2.00892L10.7512 10.8297L13.9124 7.67494C14.1433 7.44469 14.4923 7.39342 14.7961 7.54761L14.9083 7.61495L14.9846 7.68297C15.2334 7.92976 15.2646 8.33058 15.0409 8.65049L14.9652 8.73721L10.5142 13.1745L10.4327 13.2409L10.3271 13.3035L10.2368 13.3399L10.155 13.3617L10.0754 13.374L10.0133 13.3765L9.89007 13.3697L9.78548 13.3471L9.70291 13.3166L9.6007 13.2643L9.54241 13.2224L9.4569 13.1479L5.02399 8.726C4.73169 8.43447 4.73275 7.96287 5.02636 7.67264C5.28648 7.41551 5.69029 7.38633 6.01149 7.60986L6.09848 7.68534L9.25064 10.8296L9.24964 1.9952C9.24964 1.61868 9.53272 1.30251 9.90546 1.25619L10.0121 1.25Z"
-                fill="#4D4D4D"
-              />
-            </svg>
-          </Download>
         </SortContainer>
       </SearchSortBar>
 
@@ -233,39 +218,6 @@ export default function TransactionContainer() {
         <Title2>Order amount</Title2>
         <Title2>
           <span>Transaction fees</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-          >
-            <g clip-path="url(#clip0_0_5817)">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7.0002 1.63353C4.03627 1.63353 1.63353 4.03627 1.63353 7.0002C1.63353 9.96412 4.03627 12.3669 7.0002 12.3669C9.96412 12.3669 12.3669 9.96412 12.3669 7.0002C12.3669 4.03627 9.96412 1.63353 7.0002 1.63353ZM0.700195 7.0002C0.700195 3.5208 3.5208 0.700195 7.0002 0.700195C10.4796 0.700195 13.3002 3.5208 13.3002 7.0002C13.3002 10.4796 10.4796 13.3002 7.0002 13.3002C3.5208 13.3002 0.700195 10.4796 0.700195 7.0002Z"
-                fill="#4D4D4D"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7.00019 6.62382C7.25793 6.62382 7.46686 6.83276 7.46686 7.09049L7.46687 9.44604C7.46687 9.70377 7.25794 9.9127 7.00021 9.9127C6.74247 9.9127 6.53354 9.70377 6.53354 9.44604L6.53353 7.09049C6.53353 6.83276 6.74246 6.62382 7.00019 6.62382Z"
-                fill="#4D4D4D"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7.52801 4.75852C7.52801 5.05002 7.29171 5.28633 7.00021 5.28633C6.70871 5.28633 6.4724 5.05002 6.4724 4.75852C6.4724 4.46702 6.70871 4.23072 7.00021 4.23072C7.29171 4.23072 7.52801 4.46702 7.52801 4.75852Z"
-                fill="#4D4D4D"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_0_5817">
-                <rect width="14" height="14" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
         </Title2>
       </Header>
 

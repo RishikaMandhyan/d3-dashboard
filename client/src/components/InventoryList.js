@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CreateOrder from "./CreateOrder";
+import InventoryForm from "./InventoryForm";
 
 import useInventory from "../hooks/useInventory";
 
@@ -114,7 +116,7 @@ const ProductButton = styled.button`
 
 export default function InventoryList() {
   const [search, setSearch] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [display, setDisplay] = useState(false);
   const { data, setData, error } = useInventory(search);
   const navigate = useNavigate();
   console.log(data);
@@ -127,7 +129,7 @@ export default function InventoryList() {
     <Master>
       <Container1>
         <LeftBold>Current Inventory</LeftBold>
-        <ProductButton>
+        <ProductButton onClick={() => setDisplay((prev) => !prev)}>
           <span class="material-symbols-outlined">add</span>
           <span>Add product</span>
         </ProductButton>
@@ -162,6 +164,10 @@ export default function InventoryList() {
           );
         })}
       </List>
+
+      <CreateOrder display={display} setDisplay={setDisplay} type={"inventory"}>
+        <InventoryForm />
+      </CreateOrder>
     </Master>
   );
 }

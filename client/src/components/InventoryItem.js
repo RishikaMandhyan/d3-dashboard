@@ -25,7 +25,7 @@ const Form = styled.div`
   input {
     height: 40px;
     padding: 8px;
-    margin: 4px 0px 20px 0px;
+    margin: 8px 0px 20px 0px;
     outline: none;
     border-radius: 4px;
     border: 1px solid #d9d9d9;
@@ -92,9 +92,17 @@ const Cancel = styled.button`
   }
 `;
 
+const Error = styled.div`
+  color: red;
+  padding: 13px 5px 5px;
+  text-align: center;
+  font-size: 16px;
+`;
+
 export default function IItem() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  const [error, setError] = useState("");
   //or const id= location.state.id
 
   const { data, name, setName, maxQuantity, setMaxQuantity, price, setPrice } =
@@ -105,6 +113,15 @@ export default function IItem() {
   const navigate = useNavigate();
 
   async function handleSubmit() {
+    if (name === "") {
+      setError("All fields are required");
+      return;
+    }
+
+    if (price < 0 || maxQuantity < 0) {
+      setError("Negative values do not make sense");
+      return;
+    }
     try {
       const res = await axiosPrivateInstance.post(`/inventory/${id}`, {
         name: name,
@@ -123,6 +140,8 @@ export default function IItem() {
       setTimeout(() => {
         dispatch(removeToast({ id: newToast.id }));
       }, 4000);
+
+      navigate("/inventory");
     } catch (err) {
       console.error(err);
     }
@@ -138,6 +157,7 @@ export default function IItem() {
         <LeftBold>Update Item #{id}</LeftBold>
       </Container1>
       <Form>
+        {error ? <Error>{error}</Error> : null}
         <label>Name</label>
         <input
           placeholder="Item name"

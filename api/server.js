@@ -29,11 +29,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const authenticateUser = (req, res, next) => {
-  console.log(req.cookies.accessToken);
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
   const token = authHeader && authHeader.split(" ")[1];
-  //console.log(token);
 
   if (token == null) res.status(401);
 
@@ -51,7 +48,6 @@ app.get("/transactions", authenticateUser, (req, res) => {
 });
 
 app.get("/sales-analytics", authenticateUser, (req, res) => {
-  console.log(req.params.label);
   res.status(200).json(salesGraph);
 });
 
@@ -68,6 +64,7 @@ app.get("/category-analytics", authenticateUser, (req, res) => {
 });
 
 app.get("/inventory", authenticateUser, (req, res) => {
+  console.log(inventory);
   const temp = inventory.filter((item) =>
     item?.name?.toLowerCase().includes(req?.query?.q?.toLowerCase())
   );
@@ -79,12 +76,20 @@ app.post("/orders", authenticateUser, (req, res) => {
 });
 
 app.post("/inventory/:id", authenticateUser, (req, res) => {
-  console.log(req.params.id);
+  inventory.push(req.body);
+  console.log(inventory);
+  res.status(200).json(req.body);
+});
+
+app.post("/inventory/new", authenticateUser, (req, res) => {
+  inventory.push(req.body);
+  console.log("inventory[0].name");
   res.status(200).json(req.body);
 });
 
 app.get("/inventory/:id", authenticateUser, (req, res) => {
   const ans = inventory.find((item) => item.id == req.params.id);
+
   res.status(200).json(ans);
 });
 
