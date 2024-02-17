@@ -135,9 +135,9 @@ const OrderForm = ({ setError, setDisplay }) => {
   }
 
   function handleAddItem(item) {
-    const index = items?.findIndex((orderItem) => orderItem.id === item.id);
+    const index = items?.findIndex((orderItem) => orderItem._id === item._id);
     if (index !== -1) {
-      handleIncrease(item.id);
+      handleIncrease(item._id);
     } else {
       setItems((prev) => {
         return [
@@ -153,7 +153,7 @@ const OrderForm = ({ setError, setDisplay }) => {
   function handleDecrease(id) {
     const newItems = [];
     items?.forEach((item) => {
-      if (item?.id === id && item?.quantity > 1) {
+      if (item?._id === id && item?.quantity > 1) {
         newItems.push({
           ...item,
           quantity: item?.quantity - 1,
@@ -172,7 +172,7 @@ const OrderForm = ({ setError, setDisplay }) => {
     const newItems = [];
 
     items?.forEach((item) => {
-      if (item?.id === id && 1 <= item?.maxQuantity) {
+      if (item?._id === id && 1 <= item?.maxQuantity) {
         newItems.push({
           ...item,
           quantity: item?.quantity + 1,
@@ -198,6 +198,7 @@ const OrderForm = ({ setError, setDisplay }) => {
       const res = await axiosPrivateInstance.post("/orders", {
         buyer: buyer,
         items: items,
+        orderTotal: orderTotal,
       });
 
       setBuyer("");
@@ -245,14 +246,14 @@ const OrderForm = ({ setError, setDisplay }) => {
                 <span>{item?.name}</span>
                 <ItemIcons>
                   <span
-                    onClick={() => handleDecrease(item?.id)}
+                    onClick={() => handleDecrease(item?._id)}
                     class="material-symbols-outlined"
                   >
                     remove
                   </span>
                   <span>{item.quantity}</span>
                   <span
-                    onClick={() => handleIncrease(item?.id)}
+                    onClick={() => handleIncrease(item?._id)}
                     class="material-symbols-outlined"
                   >
                     add

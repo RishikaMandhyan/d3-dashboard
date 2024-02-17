@@ -108,6 +108,8 @@ export default function IItem() {
   const { data, name, setName, maxQuantity, setMaxQuantity, price, setPrice } =
     useInventoryItem(id);
 
+  console.log(name);
+
   const axiosPrivateInstance = useAxiosPrivateInstance();
   const dispatch = useDispatch();
   const navigate = useNavigate();

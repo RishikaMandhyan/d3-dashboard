@@ -2,20 +2,30 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
+import useAxiosPrivateInstance from "./useAxiosPrivateInstance";
+import axiosPrivateInstance from "../axios";
 
 const useRefreshToken = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  //const axiosPrivateInstance= useAxiosPrivateInstance();
 
   const refresh = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/token", {
-        withCredentials: true,
-      });
+      const res = await axiosPrivateInstance.post(
+        "/token",
+        {
+          email: user.email,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       dispatch(
         addUser({
           username: user?.username,
+          email: user?.email,
           accessToken: res?.data?.accessToken,
         })
       );

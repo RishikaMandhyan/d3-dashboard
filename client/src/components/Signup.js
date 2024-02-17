@@ -4,13 +4,95 @@ import { styled } from "styled-components";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
+import axiosPrivateInstance from "../axios";
 
-const MasterSignup = styled.div`
+const Container = styled.div`
+  width: 100vw;
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  height: 100vh;
+  margin: auto;
+  background-color: #fafafa;
+`;
+
+const SubContainer = styled.div`
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  height: fit-content;
+`;
+
+const MasterLogin = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  width: 300px;
+  gap: 10px;
+  width: 400px;
   align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 40px;
+  text-align: center;
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #1e2640;
+`;
+
+const Title2 = styled.h1`
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #1e2640;
+`;
+const Input = styled.input`
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #1e2640;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+
+  &:hover {
+    background-color: #454e6c;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-bottom: 10px;
+`;
+
+const CreateAccountLink = styled(Link)`
+  color: #1e2640;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const LoginImage = styled.img`
+  max-width: 650px;
+  border-radius: 40px;
+  height: 500px;
 `;
 
 export default function Signup() {
@@ -22,6 +104,7 @@ export default function Signup() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -35,11 +118,12 @@ export default function Signup() {
   const handleSubmit = async () => {
     //first check here if username/email and password are of required formats or not
     try {
-      const res = await axios.post(
-        "http://localhost:4000/signup",
+      const res = await axiosPrivateInstance.post(
+        "/signup",
         {
           username: username,
           password: password,
+          email: email,
         },
         {
           headers: {
@@ -53,6 +137,7 @@ export default function Signup() {
       dispatch(
         addUser({
           username: username,
+          email: email,
           accessToken: res?.data?.accessToken,
         })
       );
@@ -62,7 +147,7 @@ export default function Signup() {
       if (!err?.response) {
         setError("No response from server");
       } else if (err?.response?.data) {
-        setError(err.response.data);
+        setError(err?.message);
       } else {
         setError("Login failed");
       }
@@ -72,27 +157,41 @@ export default function Signup() {
   };
 
   return (
-    <MasterSignup>
-      <div errRef={errRef}>{error}</div>
-      <h1>Sign Up</h1>
-      <label>Username</label>
-      <input
-        ref={userRef}
-        id="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      ></input>
-      <label>Password</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      ></input>
-      <button onClick={handleSubmit}>Signup</button>
-      <Link to="/login">
-        <div>Already have an account? Login instead!</div>
-      </Link>
-    </MasterSignup>
+    <Container>
+      <SubContainer>
+        <LoginImage src="/assets/Login.jpg" />
+        <MasterLogin>
+          <ErrorMessage ref={errRef}>{error}</ErrorMessage>
+          <Title>Welcome to your Dashboard!</Title>
+          <Title2>User Signup</Title2>
+          <Input
+            ref={userRef}
+            id="username"
+            value={username}
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          ></Input>
+
+          <Input
+            id="email"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          ></Input>
+
+          <Input
+            type="password"
+            id="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          ></Input>
+          <SubmitButton onClick={handleSubmit}>Sign up</SubmitButton>
+          <CreateAccountLink to="/login">
+            Already have an account? Login instead!
+          </CreateAccountLink>
+        </MasterLogin>
+      </SubContainer>
+    </Container>
   );
 }

@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { useDispatch } from "react-redux";
+import { removeUser } from "../store/userSlice";
 
 const Master = styled.div`
   display: flex;
@@ -73,9 +75,10 @@ const Logout = styled.button`
 `;
 
 export function Header() {
-  async function handleLogout() {
-    try {
-    } catch (err) {}
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    dispatch(removeUser());
   }
 
   return (

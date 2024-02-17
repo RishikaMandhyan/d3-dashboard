@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import useTransactions from "../hooks/useTransactions";
 
 const Master = styled.div`
   box-sizing: border-box;
@@ -49,7 +48,7 @@ const Pages = styled.div`
   .selected {
     color: var(--Black-100, #fff);
     border-radius: 4px;
-    background: var(--Primary-Blue, #146eb4);
+    background: #1e2640;
   }
 `;
 const Page = styled.div`
@@ -68,20 +67,30 @@ const Page = styled.div`
   align-items: center;
 `;
 
-export default function PaginationContainer() {
-  console.log("pagination");
-  const { page, setPage } = useTransactions("from page");
-  const temp = new Array(5).fill(1);
+export default function PaginationContainer({
+  page = 0,
+  setPage = () => {},
+  total = 0,
+}) {
+  const numPages = Math.ceil(total / 15);
+  console.log(numPages);
+  const temp = new Array(numPages).fill(1);
 
   const handleNext = () => {
-    setPage((prev) => (prev + 1) % 5);
+    if (page + 1 <= numPages) {
+      setPage((prev) => prev + 1);
+    }
   };
 
-  console.log("pagination2");
+  const handlePrev = () => {
+    if (page - 1 >= 0) {
+      setPage((prev) => prev - 1);
+    }
+  };
 
   return (
     <Master>
-      <Previous>
+      <Previous onClick={handlePrev}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -101,7 +110,11 @@ export default function PaginationContainer() {
       <Pages>
         {temp.map((item, index) => {
           return (
-            <Page key={index} className={`${index === page ? "selected" : ""}`}>
+            <Page
+              onClick={() => setPage(index)}
+              key={index}
+              className={`${index === page ? "selected" : ""}`}
+            >
               {index + 1}
             </Page>
           );

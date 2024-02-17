@@ -149,9 +149,9 @@ export default function InventoryList() {
 
         {data?.map((item, index) => {
           return (
-            <div key={item?.id}>
-              <Items onClick={() => handleClick(item?.id)}>
-                <Title1 className="id">#{item.id}</Title1>
+            <div key={item?._id}>
+              <Items onClick={() => handleClick(item?._id)}>
+                <Title1 className="id">#{item._id}</Title1>
                 <Title1 className="data">{item.name}</Title1>
                 <Title2 className="data">&#8377;{item.price}</Title2>
                 <Title2 className="data">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAxiosPrivateInstance from "./useAxiosPrivateInstance";
 import { useEffect } from "react";
 
-const useTransactions = () => {
+const useOrders = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState({});
   const [page, setPage] = useState(0);
@@ -12,8 +12,7 @@ const useTransactions = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axiosPrivateInstance.get(`/transactions/${page + 1}`);
-
+        const res = await axiosPrivateInstance.get(`/orders/${page + 1}`);
         setData(res.data);
       } catch (err) {
         console.error(err);
@@ -30,4 +29,4 @@ const useTransactions = () => {
   return { data, setData, error, page, setPage };
 };
 
-export default useTransactions;
+export default useOrders;

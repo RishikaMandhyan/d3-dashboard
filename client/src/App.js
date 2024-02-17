@@ -12,23 +12,23 @@ import Orders from "./pages/Orders";
 import Inventory from "./pages/Inventory";
 import Payments from "./pages/Payments";
 import InventoryItem from "./pages/InventoryItem";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route path="/">
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="dashboard" element={<Dashboard />}></Route>
-              <Route path="analytics" element={<Analytics />}></Route>
-              <Route path="orders" element={<Orders />}></Route>
-              <Route path="inventory" element={<Inventory />}></Route>
-              <Route path="inventory/:id" element={<InventoryItem />}></Route>
-              <Route path="payments" element={<Payments />}></Route>
-            </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="dashboard" element={<Dashboard />}></Route>
+            <Route path="analytics" element={<Analytics />}></Route>
+            <Route path="orders" element={<Orders />}></Route>
+            <Route path="inventory" element={<Inventory />}></Route>
+            <Route path="inventory/:id" element={<InventoryItem />}></Route>
+            <Route path="payments" element={<Payments />}></Route>
           </Route>
         </Routes>
       </Router>

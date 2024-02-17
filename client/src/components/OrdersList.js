@@ -3,6 +3,7 @@ import TransactionContainer from "./Transactions";
 import { styled } from "styled-components";
 import { useState } from "react";
 import OrderForm from "./OrderForm";
+import useOrders from "../hooks/useOrders";
 
 const Master = styled.div`
   display: flex;
@@ -49,6 +50,8 @@ const OrderButton = styled.button`
 
 const OrdersList = () => {
   const [display, setDisplay] = useState(false);
+  const { data, setData, error, page = 0, setPage = () => {} } = useOrders();
+
   return (
     <Master>
       <Container1>
@@ -58,7 +61,12 @@ const OrdersList = () => {
           <span>Add order</span>
         </OrderButton>
       </Container1>
-      <TransactionContainer />
+      <TransactionContainer
+        data={data}
+        type={"Order"}
+        page={page}
+        setPage={setPage}
+      />
       <CreateOrder display={display} setDisplay={setDisplay}>
         <OrderForm />
       </CreateOrder>
